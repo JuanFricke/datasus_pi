@@ -1,10 +1,7 @@
 from flask import Flask, render_template, request
 import os
 
-if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=True)
-
+app = Flask(__name__)  # Define the app object here
 
 def get_body_class(route):
     # Dicionário de rotas para classes
@@ -19,14 +16,12 @@ def get_body_class(route):
 @app.route('/')
 def index():
     body_class = get_body_class(request.path)
-
     return render_template('index.html', css_file='style.css', body_class=body_class)
 
 @app.route('/materia/nome-da-materia')
 def materiaTeste():
-        body_class = get_body_class(request.path)
-        return render_template('materias/materia-teste.html', body_class=body_class)
-
+    body_class = get_body_class(request.path)
+    return render_template('materias/materia-teste.html', body_class=body_class)
 
 @app.route('/sobre')
 def about():
@@ -35,10 +30,9 @@ def about():
 
 @app.route('/galeria-de-graficos')
 def results():
-    image_folder = os.path.join(app.static_folder, 'graphs') # type: ignore
+    image_folder = os.path.join(app.static_folder, 'graphs')  # type: ignore
     images = [f for f in os.listdir(image_folder) if os.path.isfile(os.path.join(image_folder, f))]
     return render_template('results.html', images=images)
-
 
 @app.route('/blog')
 def blog():
@@ -48,7 +42,6 @@ def blog():
 def pesquisaResults():
     return render_template('pesquisa-results.html')
 
-
 @app.route('/feed')
 def feed():
     return render_template('feed.html')
@@ -57,6 +50,6 @@ def feed():
 def page_not_found(e):
     return render_template('404.html'), 404
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
