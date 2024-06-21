@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request
 import os
-import subprocess
 
-# Executa o comando 'ls -l'
-subprocess.run(['sass', 'static/bulma/bulma.scss:static/css/style.css'])
 
 
 
